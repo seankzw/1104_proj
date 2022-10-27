@@ -13,10 +13,10 @@ prompt: .asciz "Input: "
 main:
 
         ldr r0, =prompt     // loading address of prompt message in r0
-        bl printf              // calling printf to print prompt
+        bl printf           // calling printf to print prompt
 
         ldr r0, =input     // loading first parameter of scanf
-        ldr r1, =add_mem    // location to write data from format
+        ldr r1, =add_mem   // store the address 0x21027 into r1
         bl scanf
         // below print out the user input from scanf
         ldr r1, =add_mem    // load data from storage
