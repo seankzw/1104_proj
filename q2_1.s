@@ -15,14 +15,14 @@ main:
         ldr r0, =prompt     // loading address of prompt message in r0
         bl printf           // calling printf to print prompt
 
-        ldr r0, =input      // loading first parameter of scanf
+        ldr r0, =input      // load input into r0
         ldr r1, =add_mem    // store the address 0x21027 into r1
-        bl scanf
+        bl scanf            // scanf to store input value into add_mem
 
-        ldr r1, =add_mem    // store the address 0x21027 into r1
-        ldr r0, =output     // printf to print format
-        bl printf
+        ldr r1, =add_mem    // load the address 0x21027 into r1
+        ldr r0, =output     // load output to r0
+        bl printf           // printf to print format
 
-        mov r0, #0          // return code/graceful exit
-        mov r7, #1
-        swi 0
+        mov r0, #0          //
+        mov r7, #1          //
+        swi 0               // return code
