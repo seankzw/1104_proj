@@ -21,7 +21,7 @@ main:
 
         ldr r1, =add_mem    // load the address 0x21027 into r1
         ldr r0, =output     // load output to r0
-        bl printf           // printf to print format
+        bl printf           // printf to print output
 
         mov r0, #0          //
         mov r7, #1          //
