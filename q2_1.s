@@ -1,10 +1,10 @@
 
 .data
 
-input: .asciz "%s"                // sets '%s' to input
+input: .asciz "%s"                // define input
 
-output: .asciz "Output: %s\n"     // sets 'Output: %s\n' to output
-prompt: .asciz "Input: "          // sets 'Input: ' to prompt
+output: .asciz "Output: %s\n"     // define output
+prompt: .asciz "Input: "          // define prompt
 
 .equ    add_mem, 0x21027          // sets add_mem equals address 0x21027
 
