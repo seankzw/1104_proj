@@ -13,28 +13,30 @@ void blinkingTwo();
  
 void blinkingOne(int numberOfTimePerSecond) 
 { 
-    int counter = 0; 
-    while (counter <= 1)//While loop represents a  
+    int counter = 0; // declare counter variable and set value to 0
+    while (counter <= 1) // loop twice
     { 
-        for (int j = 0; j <= numberOfTimePerSecond; j++) 
+        for (int j = 0; j <= numberOfTimePerSecond; j++) // loop if j <= numberOfTimePerSecond, with j+1 increment starting from 0
         { 
-            pwmWrite(GREENLIGHT, 1024); 
-            softPwmWrite(REDLIGHT, 100); 
-            delay(250); 
-            pwmWrite(GREENLIGHT, 0); 
-            softPwmWrite(REDLIGHT, 0); 
-            delay(250); 
+            // 0-1024 value range for pwnWrite intensity/brightness
+            // 0-100 value range for softPwmWrite intensity/brightness
+            pwmWrite(GREENLIGHT, 1024); // writes value 1024 to pwn register for GREENLIGHT/PIN 18 to turn it on
+            softPwmWrite(REDLIGHT, 100); // writes pwn value for REDLIGHT/PIN 17 to 100 to turn it on
+            delay(250); // wait 0.25s
+            pwmWrite(GREENLIGHT, 0); // writes value 0 to pwn register for GREENLIGHT to turn it off
+            softPwmWrite(REDLIGHT, 0); // writes pwn value for REDLIGHT to 100 to turn it off
+            delay(250); // wait 0.25s
         } 
-        counter++; 
+        counter++; // counter increment+1
     } 
 } 
  
 void blinkingTwo() 
 { 
     int counter = 0; // Initialize counter to 0 
-    while (counter < 2) 
+    while (counter < 2) // loop if counter < 2
     { // While loop to run instruction twice (1 second) 
-        pwmWrite(GREENLIGHT, 256); 
+        pwmWrite(GREENLIGHT, 256);
         for (int j = 0; j < 4; j++) 
         { 
             softPwmWrite(REDLIGHT, 100); 
@@ -65,21 +67,20 @@ int main()
     int time; 
  
     // Set up GPIO mode as output 
-    wiringPiSetupGpio(); 
-    pinMode(GREENLIGHT, PWM_OUTPUT); 
-    pinMode(REDLIGHT, OUTPUT); 
+    wiringPiSetupGpio(); // initialises wiringPi and assumes that the calling program is going to be using the wiringPi pin numbering scheme
+    pinMode(GREENLIGHT, PWM_OUTPUT); // set GREENLIGHT to PWN_OUTPUT mode
+    pinMode(REDLIGHT, OUTPUT); // set REDLIGHT to OUTPUT mode
  
     softPwmCreate(17, 1, 100); // Set PWM Channel along with range for green light 
  
-    // Set both leds to off at start of program 
-    softPwmWrite(REDLIGHT, 0); 
-    pwmWrite(GREENLIGHT, 0); 
+    softPwmWrite(REDLIGHT, 0); // turn off red light
+    pwmWrite(GREENLIGHT, 0);  // turn off green light
  
     for (;;) 
     { 
-        mode = getchar(); // Request input from user 
+        mode = getchar(); // request input from user 
  
-        if (mode == '0') // Turn off leds 
+        if (mode == '0') // turn off leds 
         { 
             softPwmWrite(REDLIGHT, 0); // Turn off red lights 
             pwmWrite(GREENLIGHT, 0);   // Turn off green lights 
