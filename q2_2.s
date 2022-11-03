@@ -29,10 +29,10 @@ device: .asciz  "/dev/gpiomem" // device constant/filepath
 // defined in /usr/include/asm-generic/mman-common.h:
 .equ    MAP_SHARED,1 // share changes
 .section .rodata // constant program data
-.text
-.global main
-.extern printf
-.extern scanf
+.text // text section
+.global main // start assembly code
+.extern printf // external printf
+.extern scanf // external scanf
 
 main: // main function/label
 
