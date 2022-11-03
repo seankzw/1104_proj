@@ -116,7 +116,7 @@ ask_opt: // ask user for input
     bleq set_pin18 // set pin to 18
 
     ldr r0, =pin_opt // load pin_opt address into r0
-    ldr r1, add_pin // load pin address into r1 
+    ldr r1, =pin // load pin address into r1 
     ldr r1, [r1] // load r1 value into r1
     bl printf // print pin_opt
 
@@ -183,19 +183,19 @@ reset: // off both lights function/label
 
 set_pin18: // set_pin18 label/function
     ldr r2, =PIN18 // load constant PIN18 into r2
-    ldr r10, add_pin // load add_pin into r10
-    str r2, [r10] // store r2 into r10 add_pin
+    ldr r10, =pin // load =pin into r10
+    str r2, [r10] // store r2 into r10 =pin
     bx  lr // end of label
 
 set_pin17: // set_pin17 label/function
     ldr r2, =PIN17 // load constant PIN17 into r2
-    ldr r10, add_pin // load address pin into r10
-    str r2, [r10] // store r2 into r10 add_pin
+    ldr r10, =pin // load address pin into r10
+    str r2, [r10] // store r2 into r10 =pin
     bx  lr // end of label
 
 // addresses of constants/messages
 gpio_base: .word 0x3f200000 // GPIO base address
 mem_fd: .word device // device address
 O_RDWR_O_SYNC: .word 2|256 // open for read and write, syncing
-add_pin: .word pin // pin address
+// =pin: .word pin // pin address
 	
