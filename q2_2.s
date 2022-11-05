@@ -146,7 +146,7 @@ blink: // on light function/label
 // Set up the GPIO pin funtion register in programming memory
     ldr r3, =pin // load pin address to r3
     ldr r3, [r3] // load value of r3 into r3
-    lsl r3, r3, r1 / shift to pin position
+    lsl r3, r3, r1 // shift to pin position
     orr r2, r2, r3 // set bit
     str r2, [r0] // update register
     bx lr // end blink label/function
