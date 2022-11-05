@@ -34,7 +34,7 @@ device: .asciz  "/dev/gpiomem" // device constant/filepath
 .extern printf // external printf
 .extern scanf // external scanf
 
-main: // main function/label
+main: // main function
 
     push {ip, lr} // push return address and dummy register
 	
@@ -44,7 +44,7 @@ main: // main function/label
     pop	{ip, pc} // pop return address and dummy register
     bx lr // end main
 
-rpi_setup: // set up raspberry pins function/label
+rpi_setup: // set up raspberry pins function
 
 // open /dev/gpiomem for read/write and syncing
     ldr r1, O_RDWR_O_SYNC // flags for accessing device
@@ -94,7 +94,7 @@ rpi_setup: // set up raspberry pins function/label
     str r2, [r0] // update register
     mov r3, PINS_IN_REG // divisor
 
-ask_opt: // ask user for input
+ask_opt: // ask user for input function
 
     ldr	r0, =prompt	// load prompt address into r0
     bl	printf // print prompt
@@ -133,7 +133,7 @@ ask_opt: // ask user for input
 
     b ask_opt // call ask_opt
 
-blink: // on light function/label
+blink: // on light function
 
     mov r0, r5 // GPIO programming memory
     ldr r1, =pin // load pin address into r1
@@ -149,10 +149,10 @@ blink: // on light function/label
     lsl r3, r3, r1 // shift to pin position
     orr r2, r2, r3 // set bit
     str r2, [r0] // update register
-    bx lr // end blink label/function
+    bx lr // end blink function
 
 
-reset: // off both lights function/label
+reset: // off both lights function
 
     mov r0, r5 // GPIO programming memory
     ldr r1, =PIN17 // load pin 17 to r1
@@ -179,23 +179,22 @@ reset: // off both lights function/label
     lsl r3, r3, r1 // shift to pin position
     orr r2, r2, r3 // clear bit
     str r2, [r0] // update register
-    bx lr // end of label
+    bx lr // end blink function
 
-set_pin18: // set_pin18 label/function
+set_pin18: // set_pin18 function
     ldr r2, =PIN18 // load constant PIN18 into r2
     ldr r10, =pin // load =pin into r10
     str r2, [r10] // store r2 into r10 =pin
-    bx  lr // end of label
+    bx  lr // end set pin 18 function
 
-set_pin17: // set_pin17 label/function
+set_pin17: // set_pin17 function
     ldr r2, =PIN17 // load constant PIN17 into r2
     ldr r10, =pin // load address pin into r10
     str r2, [r10] // store r2 into r10 =pin
-    bx  lr // end of label
+    bx  lr // end set pin 17 function
 
 // addresses of constants/messages
 gpio_base: .word 0x3f200000 // GPIO base address
 mem_fd: .word device // device address
 O_RDWR_O_SYNC: .word 2|256 // open for read and write, syncing
-// =pin: .word pin // pin address
 	
