@@ -34,7 +34,6 @@ void blinkingTwo()
         softPwmWrite(REDLIGHT, 100);
         delay(62.5);
         softPwmWrite(REDLIGHT, 0);
-        printf("Red blinked\n");
         delay(62.5);
     }
     pwmWrite(GREENLIGHT, 0);
@@ -43,7 +42,6 @@ void blinkingTwo()
         softPwmWrite(REDLIGHT, 100);
         delay(62.5);
         softPwmWrite(REDLIGHT, 0);
-        printf("Red blinked\n");
         delay(62.5);
     }
     pwmWrite(GREENLIGHT, 256);
