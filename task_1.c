@@ -47,7 +47,7 @@ void blinkingTwo()
         delay(62.5);
     }
     pwmWrite(GREENLIGHT, 256);
-    delay(125);
+    delay(250);
     pwmWrite(GREENLIGHT, 0);
 }
 
