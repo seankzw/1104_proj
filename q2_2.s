@@ -8,21 +8,19 @@ pin: .int 17 // set pin bits
 
 prompt: .asciz "Enter num: \n" // prompt constant
 input: .asciz "%d" // input constant
-opt: .asciz "option %d \n" // opt constant
-pin_opt: .asciz "pin: %d \n" // pin_opt constant
-here: .asciz ">>\n" // here constant
+option: .asciz "option %d \n" // option constant
+pin_option: .asciz "pin: %d \n" // pin_option constant
 device: .asciz  "/dev/gpiomem" // device constant/filepath
 
 .equ    PIN18,18 // set pin 18
 .equ    PIN17,17 // set pin 17
-.equ    PINS_IN_REG,32
+.equ    PINS_IN_REG,32 // used for divisor
 .equ    GPSET0,0x1c // set register offset
 .equ    PIN_FIELD,0b111 // PIN_FIELD equals 3 bits
 .equ    GPCLR0,0x28 // clear register offset
 .equ    PROT_RDWR,0x3 //PROT_READ(0x1)|PROT_WRITE(0x2)
 .equ    BLOCK_SIZE,4096 // memory page
 .equ    OUTPUT,1 // use pin for ouput
-.equ    ONE_SEC,1 // sleep one second
 .equ    mem_fd_open,3 // file descriptor
 .equ    FILE_DESCRP_ARG,0 // file descriptor
 .equ    DEVICE_ARG,3 // device address
@@ -39,12 +37,12 @@ main: // main function
     push {ip, lr} // push return address and dummy register
 	
     bl rpi_setup // call rpi_setup
-    b ask_opt // call ask_opt
+    b ask_option // call ask_option
 
     pop	{ip, pc} // pop return address and dummy register
     bx lr // end main
 
-rpi_setup: // set up raspberry pins function
+rpi_setup: // set up raspberry pins function/instruction
 
 // open /dev/gpiomem for read/write and syncing
     ldr r1, O_RDWR_O_SYNC // flags for accessing device
@@ -64,7 +62,7 @@ rpi_setup: // set up raspberry pins function
 
 //  setup pin
     mov r5, r0 // use r5 for programming memory address
-    ldr r1, =pin // pin to blink
+    ldr r1, =pin // pin to on_light
     ldr r1, [r1] // load value of r1 into r1
     mov r2, OUTPUT // output
 
@@ -94,7 +92,7 @@ rpi_setup: // set up raspberry pins function
     str r2, [r0] // update register
     mov r3, PINS_IN_REG // divisor
 
-ask_opt: // ask user for input function
+ask_option: // ask user for input function/instruction
 
     ldr	r0, =prompt // load prompt address into r0
     bl	printf // print prompt
@@ -102,7 +100,7 @@ ask_opt: // ask user for input function
     ldr r0, =input // load input address into r0
     ldr	r1, =num // load num address r1
     bl	scanf // scanf input
-    ldr r0, =opt // load option string into r0
+    ldr r0, =option // load option string into r0
     ldr	r1, =num // load address of num into r1
     ldr r1, [r1] // load value of r1 address into r1
     bl printf // print prompt
@@ -115,25 +113,25 @@ ask_opt: // ask user for input function
     cmp r1, #2 // if user input 2
     bleq set_pin18 // set pin to 18
 
-    ldr r0, =pin_opt // load pin_opt address into r0
+    ldr r0, =pin_option // load pin_option address into r0
     ldr r1, =pin // load pin address into r1 
     ldr r1, [r1] // load r1 value into r1
-    bl printf // print pin_opt
+    bl printf // print pin_option
 
 // option branches
     ldr	r0, =num // load num address into r0
     ldr r0, [r0] // load r0 value into r0
 
     cmp r0, #1 // if r0 value is 1
-    bleq blink // call blink pin 17 (green)
+    bleq on_light // call on_light pin 17 (red)
     cmp r0, #2 // if r0 value is 2
-    bleq blink // call blink pin 18(red)
+    bleq on_light // call on_light pin 18 (green)
     cmp r0, #3 // if r0 value is 3
-    bleq reset // off both lights
+    bleq off_light // off both lights
 
-    b ask_opt // call ask_opt
+    b ask_option // call ask_option
 
-blink: // on light function
+on_light: // on light function/instruction
 
     mov r0, r5 // GPIO programming memory
     ldr r1, =pin // load pin address into r1
@@ -149,10 +147,10 @@ blink: // on light function
     lsl r3, r3, r1 // shift to pin position
     orr r2, r2, r3 // set bit
     str r2, [r0] // update register
-    bx lr // end blink function
+    bx lr // end on_light function
 
 
-reset: // off both lights function
+off_light: // off both lights function/instruction
 
     mov r0, r5 // GPIO programming memory
     ldr r1, =PIN17 // load pin 17 to r1
@@ -179,15 +177,15 @@ reset: // off both lights function
     lsl r3, r3, r1 // shift to pin position
     orr r2, r2, r3 // clear bit
     str r2, [r0] // update register
-    bx lr // end blink function
+    bx lr // end on_light function
 
-set_pin18: // set_pin18 function
+set_pin18: // set_pin18 function/instruction
     ldr r2, =PIN18 // load constant PIN18 into r2
     ldr r10, =pin // load =pin into r10
     str r2, [r10] // store r2 into r10 =pin
     bx  lr // end set pin 18 function
 
-set_pin17: // set_pin17 function
+set_pin17: // set_pin17 function/instruction
     ldr r2, =PIN17 // load constant PIN17 into r2
     ldr r10, =pin // load address pin into r10
     str r2, [r10] // store r2 into r10 =pin
@@ -196,5 +194,6 @@ set_pin17: // set_pin17 function
 // addresses of constants/messages
 gpio_base: .word 0x3f200000 // GPIO base address
 mem_fd: .word device // device address
-O_RDWR_O_SYNC: .word 2|256 // open for read and write, syncing
-	
+O_RDWR_O_SYNC: .word 2|256 // open for read and write; syncing
+
+
