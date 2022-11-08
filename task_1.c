@@ -18,7 +18,7 @@ void blinkingOne(int numberOfTimePerSecond)
     { 
         for (int j = 0; j <= numberOfTimePerSecond; j++) // loop if j <= numberOfTimePerSecond, with j+1 increment starting from 0
         { 
-            // 0-1024 value range for pwnWrite intensity/brightness
+            // 0-1024 value range for pwmWrite intensity/brightness
             // 0-100 value range for softPwmWrite intensity/brightness
             pwmWrite(GREENLIGHT, 1024); // writes value 1024 to pwn register for GREENLIGHT/PIN 18 to turn it on
             softPwmWrite(REDLIGHT, 100); // writes pwn value for REDLIGHT/PIN 17 to 100 to turn it on
