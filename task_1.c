@@ -28,7 +28,6 @@ void blinkingOne()
 
 void blinkingTwo()
 {
-    pwmWrite(GREENLIGHT, 0);
     pwmWrite(GREENLIGHT, 256);
     for (int j = 0; j < 4; j++)
     {
@@ -48,6 +47,8 @@ void blinkingTwo()
         delay(62.5);
     }
     pwmWrite(GREENLIGHT, 256);
+    delay(62.5);
+    pwmWrite(GREENLIGHT, 0);
 }
 
 int main()
