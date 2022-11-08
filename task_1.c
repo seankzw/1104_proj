@@ -28,29 +28,26 @@ void blinkingOne()
 
 void blinkingTwo()
 {
-    int counter = 0;    // Initialize counter to 0
-    while (counter < 2) // loop if counter < 2
-    {                   // While loop to run instruction twice (1 second)
-        pwmWrite(GREENLIGHT, 256);
-        for (int j = 0; j < 4; j++)
-        {
-            softPwmWrite(REDLIGHT, 100);
-            delay(62.5);
-            softPwmWrite(REDLIGHT, 0);
-            printf("Red blinked\n");
-            delay(62.5);
-        }
-        pwmWrite(GREENLIGHT, 0);
-        for (int j = 0; j < 4; j++)
-        {
-            softPwmWrite(REDLIGHT, 100);
-            delay(62.5);
-            softPwmWrite(REDLIGHT, 0);
-            printf("Red blinked\n");
-            delay(62.5);
-        }
-        counter++;
+    pwmWrite(GREENLIGHT, 0);
+    pwmWrite(GREENLIGHT, 256);
+    for (int j = 0; j < 4; j++)
+    {
+        softPwmWrite(REDLIGHT, 100);
+        delay(62.5);
+        softPwmWrite(REDLIGHT, 0);
+        printf("Red blinked\n");
+        delay(62.5);
     }
+    pwmWrite(GREENLIGHT, 0);
+    for (int j = 0; j < 4; j++)
+    {
+        softPwmWrite(REDLIGHT, 100);
+        delay(62.5);
+        softPwmWrite(REDLIGHT, 0);
+        printf("Red blinked\n");
+        delay(62.5);
+    }
+    pwmWrite(GREENLIGHT, 256);
 }
 
 int main()
