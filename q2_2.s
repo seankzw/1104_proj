@@ -49,7 +49,7 @@ rpi_setup: // set up raspberry pins function
 // open /dev/gpiomem for read/write and syncing
     ldr r1, O_RDWR_O_SYNC // flags for accessing device
     ldr r0, mem_fd // address of /dev/gpiomem
-    bl open
+    bl open // open new file obtain file descriptor
     mov r4, r0 // use r4 for file descripton
 	
 // Map the GPIO registers to a main memory location so we can access them
