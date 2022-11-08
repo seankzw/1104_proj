@@ -72,7 +72,7 @@ rpi_setup: // set up raspberry pins function
     mov r4, r0 // save pointer to GPIO
     mov r11, r1 // save pin number
     mov r6, r2 // save function code
-    ldr r1, =pin
+    ldr r1, =pin // load pin address into r1
 	
 // Compute address of GPFSEL register and pin field
     mov r3, 10 // divisor
@@ -96,7 +96,7 @@ rpi_setup: // set up raspberry pins function
 
 ask_opt: // ask user for input function
 
-    ldr	r0, =prompt	// load prompt address into r0
+    ldr	r0, =prompt // load prompt address into r0
     bl	printf // print prompt
 	
     ldr r0, =input // load input address into r0
@@ -125,7 +125,7 @@ ask_opt: // ask user for input function
     ldr r0, [r0] // load r0 value into r0
 
     cmp r0, #1 // if r0 value is 1
-	bleq blink // call blink pin 17 (green)
+    bleq blink // call blink pin 17 (green)
     cmp r0, #2 // if r0 value is 2
     bleq blink // call blink pin 18(red)
     cmp r0, #3 // if r0 value is 3
