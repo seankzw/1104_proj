@@ -28,25 +28,23 @@ void blinkingOne()
 
 void blinkingTwo()
 {
-    pwmWrite(GREENLIGHT, 256);
-    for (int j = 0; j < 4; j++)
+    for (int i = 0; i < 2; i++)
     {
-        softPwmWrite(REDLIGHT, 100);
-        delay(62.5);
-        softPwmWrite(REDLIGHT, 0);
-        delay(62.5);
+        pwmWrite(GREENLIGHT, 256);
+        for (int j = 0; j < 2; j++)
+        {
+            softPwmWrite(REDLIGHT, 100);
+            delay(62.5);
+            softPwmWrite(REDLIGHT, 0);
+            delay(62.5);
+            softPwmWrite(REDLIGHT, 100);
+            delay(62.5);
+            softPwmWrite(REDLIGHT, 0);
+            delay(62.5);
+            pwmWrite(GREENLIGHT, 0);
+            printf("Green blinked\n");
+        }
     }
-    pwmWrite(GREENLIGHT, 0);
-    for (int j = 0; j < 4; j++)
-    {
-        softPwmWrite(REDLIGHT, 100);
-        delay(62.5);
-        softPwmWrite(REDLIGHT, 0);
-        delay(62.5);
-    }
-    pwmWrite(GREENLIGHT, 256);
-    delay(250);
-    pwmWrite(GREENLIGHT, 0);
 }
 
 int main()
