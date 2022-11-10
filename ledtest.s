@@ -1,4 +1,4 @@
-@COA group assignment Question 2 Part 2
+COA group assignment Question 2 Part 2
 .data
 .balign 4				@alignment of the instruction of data
 prompt: .asciz "Please enter a mode:\n" @for printf calls,by GNU assembler's ".asciz";
@@ -31,8 +31,8 @@ main:
  	ldr r0, =input @load input address into r0
    	ldr r1, =num @load num address r1
    	bl scanf @scanf input
-    ldr r0, =option	@load option string into r0
-    ldr r1, =num @load address of num into r1
+	ldr r0, =option	@load option string into r0
+	ldr r1, =num @load address of num into r1
   	ldr r1, [r1] @load value of r1 address into r1
    	bl printf @print prompt
    	ldr r1, =num @load num address into r1
@@ -68,5 +68,4 @@ ledOff:
    	mov r1, #0
    	bl digitalWrite
    	b main
-
 
